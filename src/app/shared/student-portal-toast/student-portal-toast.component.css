@@ -1,0 +1,21 @@
+:host {
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 10px 10px 10px 10px;
+  width: 300px;
+  border-radius: 3px 3px 3px 3px;
+  color: #000000 !important;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.btn-pink {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.toast-success {
+  display: none !important;
+}

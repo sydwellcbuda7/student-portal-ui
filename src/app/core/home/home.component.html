@@ -1,0 +1,146 @@
+<div class="left-div">
+  <div class="header">Student Portal</div>
+  <div class="footer">
+    <span class="text">Privacy Policy</span>
+    <span>Contact</span>
+  </div>
+</div>
+<div class="right-div">
+  <div class="form-group">
+    <div class="log-in-header">
+      <span class="welcome-text">Welcome to </span>
+      <span class="enviro-text">Student Portal</span>
+    </div>
+    <div  *ngIf="!isRegisterMode; else registerForm">
+      <form [formGroup]="loginForm">
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput  placeholder="username" formControlName="username">
+          </mat-form-field>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+            Username is required
+          </mat-error>
+        </div>
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="passsword" formControlName="password">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+
+          </mat-form-field>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+            Password is required
+          </mat-error>
+
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+            Password must have a minimum length of 6 characters
+          </mat-error>
+
+        </div>
+      </form>
+    </div>
+
+    <ng-template #registerForm>
+      <form>
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput autocomplete="name">
+          </mat-form-field>
+        </div>
+
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput autocomplete="name">
+          </mat-form-field>
+        </div>
+
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Gender</mat-label>
+            <input matInput autocomplete="name">
+          </mat-form-field>
+        </div>
+
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Student Number</mat-label>
+            <input matInput autocomplete="name">
+          </mat-form-field>
+        </div>
+
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput autocomplete="email">
+          </mat-form-field>
+        </div>
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" autocomplete="password">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="label-color">
+          <mat-form-field class="input-fields" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" autocomplete="confirm password">
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+      </form>
+      <button class="register-button" mat-raised-button color="primary"
+              (click)=" register()"
+      >Register</button>
+    </ng-template>
+    <div class="forgot-password" *ngIf="!isRegisterMode">
+      <a href="">Forgot Password?</a>
+    </div>
+    <button
+      class="login-button"
+      mat-raised-button
+      color="primary"
+      *ngIf="!isRegisterMode"
+      (click)=" login()"
+    >
+      Login
+    </button>
+    <div class="register">
+      <span *ngIf="!isRegisterMode">
+        Don't have an account? <a href="" (click)="toggleRegisterMode($event)">Create Account</a>
+      </span>
+      <span *ngIf="isRegisterMode">
+        Already have an account? <a href="" (click)="toggleRegisterMode($event)">Login</a>
+      </span>
+    </div>
+  </div>
+</div>
