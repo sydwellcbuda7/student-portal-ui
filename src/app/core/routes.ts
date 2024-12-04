@@ -13,13 +13,6 @@ export const routes: AuthorizedRoutes = [
   },
 
   {
-    path: 'admin',
-    component: ContentWrapperComponent,
-    loadChildren: () => import('./../admin/admin.module').then(m => m.AdminModule),
-    data: { authorizedRoles: [Role.ADMIN]}
-  },
-
-  {
     path: 'student',
     authorizedRoles: [Role.STUDENT],
     component: ContentWrapperComponent,
@@ -29,14 +22,3 @@ export const routes: AuthorizedRoutes = [
 
   ];
 
-
-// {
-//   path: '',
-//   redirectTo: 'home',
-//   pathMatch: 'full'
-// },
-// {
-//   path: 'home',
-//   component: HomeComponent,
-//   permitAll: true
-// },

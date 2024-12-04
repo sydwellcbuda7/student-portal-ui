@@ -7,7 +7,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {ContentWrapperComponent} from "./content-wrapper/content-wrapper.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {PortalDashboardComponent} from "./portal-dashboard/portal-dashboard.component";
 import {AccessControlService} from "./service/access-control.service";
 
 
@@ -16,8 +15,7 @@ import {AccessControlService} from "./service/access-control.service";
   declarations: [
     StudentPortalToastComponent,
     ContentWrapperComponent,
-    DashboardComponent,
-    PortalDashboardComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,
