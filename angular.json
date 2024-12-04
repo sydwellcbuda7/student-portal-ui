@@ -63,7 +63,8 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "student-portal:build:production"
+              "buildTarget": "student-portal:build:production",
+              "proxyConfig": "proxy.conf.prod.json"
             },
             "development": {
               "buildTarget": "student-portal:build:development"

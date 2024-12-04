@@ -8,6 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ContentWrapperComponent} from "./content-wrapper/content-wrapper.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AccessControlService} from "./service/access-control.service";
+import {StudentService} from "./service/student.service";
 
 
 
@@ -31,6 +32,8 @@ import {AccessControlService} from "./service/access-control.service";
   ],
 
   providers: [
-    AccessControlService]
+    AccessControlService,
+    StudentService
+  ]
 })
 export class SharedModule { }

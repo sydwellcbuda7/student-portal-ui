@@ -8,7 +8,8 @@
 <div class="right-div">
   <div class="form-group">
     <div class="log-in-header">
-      <span class="welcome-text">Welcome to </span>
+      <span  *ngIf="!isRegisterMode"class="welcome-text">Welcome to </span>
+      <span  *ngIf="isRegisterMode" class="welcome-text">Register to </span>
       <span class="enviro-text">Student Portal</span>
     </div>
     <div  *ngIf="!isRegisterMode; else registerForm">

@@ -10,6 +10,7 @@ import {ToastrModule} from "ngx-toastr";
 import {StudentPortalToastComponent} from "./shared/student-portal-toast/student-portal-toast.component";
 import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
+import {StudentModule} from "./student/student.module";
 
 
 @NgModule({
@@ -22,6 +23,8 @@ import {CoreModule} from "./core/core.module";
     RouterModule,
     MaterialModule,
     CoreModule,
+    SharedModule,
+    StudentModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

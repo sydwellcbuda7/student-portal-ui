@@ -1,1 +1,47 @@
-<p>dashboard works!</p>
+<header>
+  <mat-toolbar class="header-toolbar mat-elevation-z0 fixed-top">
+    <mat-toolbar-row>
+      <div class="profile-header">
+        <span class="profile-name">John Doe</span>
+        <!-- Profile Icon -->
+        <mat-icon style="display: flex; align-content: center; align-items: center; justify-content: center"
+          class="profile-icon"
+          [matMenuTriggerFor]="menu"
+          aria-label="User menu"
+        >JD
+        </mat-icon>
+        <!-- Dropdown Menu -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>
+
+
+<main style="margin-top: 30px;">
+  <div class="profile-container">
+    <div class="profile-title">Profile</div>
+    <mat-card class="profile-card mat-elevation-z0">
+      <div class="profile-details">
+        <div class="profile-detail">Name: {{user.name}}</div>
+        <mat-divider></mat-divider>
+        <div class="profile-detail">Surname: {{user.surname}}</div>
+        <mat-divider></mat-divider>
+        <div class="profile-detail">Email: {{user.email}}</div>
+        <mat-divider></mat-divider>
+        <div class="profile-detail">Student Number: {{user.studentNumber}}</div>
+        <mat-divider></mat-divider>
+        <div class="profile-detail">Gender: {{user.gender}}</div>
+        <mat-divider></mat-divider>
+        <div  class="profile-detail"><div style="">Password: *********  </div><mat-icon color="primary" style="margin-right: 10px">edit</mat-icon></div>
+        <mat-divider></mat-divider>
+        <div style="display: flex; justify-content: end; margin-right: 10px"> <button  mat-flat-button color="primary" > Edit Profile</button></div>
+      </div>
+    </mat-card>
+  </div>
+</main>

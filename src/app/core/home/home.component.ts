@@ -77,14 +77,16 @@ export class HomeComponent implements OnInit {
 
       this.accessControlService.loginUser(credentials).subscribe((data) => {
         this.accessControlService.setSession(data);
+
         this.accessControlService.getSessionContexts().subscribe((sessionContextList) => {
           if (sessionContextList.length > 1) {
-            this.accessControlService.setSessionContext = sessionContextList.find((s: {
-              role: string
-            }) => s.role === 'STUDENT');
+            this.accessControlService.setSessionContext(
+              sessionContextList.find((s: { role: string }) => s.role === 'STUDENT')
+            );
           } else {
-            this.accessControlService.setSessionContext = sessionContextList[0];
+            this.accessControlService.setSessionContext(sessionContextList[0]);
           }
+
           this.router.navigate(['/student']);
 
         });
@@ -102,7 +104,7 @@ export class HomeComponent implements OnInit {
     if (this.registerForm.valid) {
       const userDetails = this.registerForm.value;
       console.log('Register:', userDetails);
-      // Add your registration API call here
+
     } else {
       console.log('Register failed');
       this.markAllFieldsAsTouched(this.registerForm);

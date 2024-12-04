@@ -46,22 +46,8 @@ signUpStudent(student: any): Observable<any> {
 
   logout() {
     localStorage.removeItem('id_token');
-    localStorage.removeItem('jobId');
-    localStorage.removeItem('et_session');
+    localStorage.removeItem('sp_session');
   }
-
-  isLoggedIn() {
-    return localStorage.getItem('id_token') !== null;
-  }
-
-  // isStudent(): boolean {
-  //   console.log('Session Context Check :', this.getSessionContext);
-  //   return this.getSessionContext && this.getSessionContext.role === Role.STUDENT;
-  // }
-  //
-  // isAdmin(): boolean {
-  //   return this.getSessionContext && this.getSessionContext.role === Role.ADMIN;
-  // }
 
   getLoggedInUserInfo(): any {
   const token = localStorage.getItem('id_token');
@@ -72,11 +58,11 @@ signUpStudent(student: any): Observable<any> {
 }
 
    setSessionContext(sessionContext: any) {
-    localStorage.setItem('et_session', JSON.stringify(sessionContext));
+    localStorage.setItem('sp_session', JSON.stringify(sessionContext));
   }
 
    getSessionContext(): any {
-    const session = localStorage.getItem('et_session');
+    const session = localStorage.getItem('sp_session');
     return session ? JSON.parse(session) : null;
   }
 
