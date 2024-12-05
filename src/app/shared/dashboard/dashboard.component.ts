@@ -91,15 +91,15 @@ export class DashboardComponent implements OnInit {
         console.log('student', this.student);
         this.studentService.registerOrUpdateStudent(this.student).subscribe((data) => {
           this.student = data
+          this.profileForm.disable();
+
         }, (error) => {
 
         });
+
       } else {
         this.markAllFieldsAsTouched(this.profileForm);
       }
-      this.profileForm.disable();
-      this.profileForm.get('password')?.enable();
-      console.log('Saved profile:', this.profileForm.value);
     }
   }
 

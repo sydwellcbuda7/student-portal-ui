@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
 
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
@@ -47,18 +47,32 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  if (this.registerForm) {
+    this.registerForm.valueChanges.subscribe((value) => {
+      console.log('value changed', value);
+      const password = this.registerForm.get('password')?.value;
+      const confirmPassword = this.registerForm.get('confirmPassword')?.value;
+
+      if (password && confirmPassword && password !== confirmPassword) {
+        this.registerForm.get('confirmPassword')?.setErrors({ confirmPassword: true });
+      } else {
+        const errors = this.registerForm.get('confirmPassword')?.errors;
+        if (errors) {
+          delete errors['confirmPassword'];
+          if (Object.keys(errors).length === 0) {
+            this.registerForm.get('confirmPassword')?.setErrors(null);
+          }
+        }
+      }
+    });
   }
+}
 
   toggleRegisterMode(event: Event): void {
     event.preventDefault(); // Prevents the default anchor behavior
     this.isRegisterMode = !this.isRegisterMode;
   }
 
-
-  toggleMode() {
-    this.isLoginMode = !this.isLoginMode; // Switch between login and register
-    this.clearFields();
-  }
 
   clearFields() {
     this.username = '';
@@ -112,15 +126,29 @@ export class HomeComponent implements OnInit {
       const firstName = this.registerForm.get('firstName')?.value as string;
       const lastName = this.registerForm.get('lastName')?.value as string;
       const gender = this.registerForm.get('gender')?.value as string;
-      const studentNumber = this.registerForm.get('studentNumber')?.value as string;
+      // const studentNumber = this.registerForm.get('studentNumber')?.value as string;
       const email = this.registerForm.get('email')?.value as string;
       const password = this.registerForm.get('password')?.value as string;
       const confirmPassword = this.registerForm.get('confirmPassword')?.value as string;
+      if (password !== confirmPassword) {
+        this.registerForm.get('password')?.setErrors({ confirmPassword: true });
+        return
+      } else {
+        // Clear the error if the passwords match
+        const errors = this.registerForm.get('password')?.errors;
+        if (errors) {
+          delete errors['confirmPassword'];
+          if (Object.keys(errors).length === 0) {
+            this.registerForm.get('password')?.setErrors(null);
+          }
+        }
+      }
+
       const student = {
         firstName,
         lastName,
         gender,
-        studentNumber,
+        // studentNumber,
         email,
         password
       };

@@ -26,12 +26,31 @@ export class ChangePasswordComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
-    // Get the 'token' query parameter from the URL
     this.route.queryParamMap.subscribe((params) => {
       this.token = params.get('token');
-      console.log('Token:', this.token); // Optional: Log the token
     });
+
+    if (this.changePasswordForm) {
+      this.changePasswordForm.valueChanges.subscribe((value) => {
+        console.log('value changed', value);
+        const password =this.changePasswordForm.get('password')?.value;
+        const confirmPassword =this.changePasswordForm.get('confirmPassword')?.value;
+
+        if (password && confirmPassword && password !== confirmPassword) {
+          this.changePasswordForm.get('confirmPassword')?.setErrors({ confirmPassword: true });
+        } else {
+          const errors =this.changePasswordForm.get('confirmPassword')?.errors;
+          if (errors) {
+            delete errors['confirmPassword'];
+            if (Object.keys(errors).length === 0) {
+              this.changePasswordForm.get('confirmPassword')?.setErrors(null);
+            }
+          }
+        }
+      });
+    }
   }
 
   changePassword(): void {
