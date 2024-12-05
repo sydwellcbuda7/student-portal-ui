@@ -11,14 +11,6 @@ import {StudentService} from "../../shared/service/student.service";
 })
 export class HomeComponent implements OnInit {
 
-  isLoginMode = true; // Toggle between login and register modes
-
-  username = '';
-  email = '';
-  password = '';
-  confirmPassword = '';
-
-  errorMessage = '';
   hide = true;
   isRegisterMode = false;
   loginForm: FormGroup;
@@ -39,7 +31,7 @@ export class HomeComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       gender: ['', [Validators.required]],
-      studentNumber: ['', [Validators.required]],
+      // studentNumber: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -48,8 +40,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   if (this.registerForm) {
-    this.registerForm.valueChanges.subscribe((value) => {
-      console.log('value changed', value);
+    this.registerForm.valueChanges.subscribe(() => {
       const password = this.registerForm.get('password')?.value;
       const confirmPassword = this.registerForm.get('confirmPassword')?.value;
 
@@ -69,18 +60,10 @@ export class HomeComponent implements OnInit {
 }
 
   toggleRegisterMode(event: Event): void {
-    event.preventDefault(); // Prevents the default anchor behavior
+    event.preventDefault();
     this.isRegisterMode = !this.isRegisterMode;
   }
 
-
-  clearFields() {
-    this.username = '';
-    this.email = '';
-    this.password = '';
-    this.confirmPassword = '';
-    this.errorMessage = '';
-  }
 
 
   login(): void {
@@ -116,34 +99,18 @@ export class HomeComponent implements OnInit {
 
       });
     }, (error) => {
-
+        console.log(error);
     });
   }
 
   register(): void {
     if (this.registerForm.valid) {
-
       const firstName = this.registerForm.get('firstName')?.value as string;
       const lastName = this.registerForm.get('lastName')?.value as string;
       const gender = this.registerForm.get('gender')?.value as string;
       // const studentNumber = this.registerForm.get('studentNumber')?.value as string;
       const email = this.registerForm.get('email')?.value as string;
       const password = this.registerForm.get('password')?.value as string;
-      const confirmPassword = this.registerForm.get('confirmPassword')?.value as string;
-      if (password !== confirmPassword) {
-        this.registerForm.get('password')?.setErrors({ confirmPassword: true });
-        return
-      } else {
-        // Clear the error if the passwords match
-        const errors = this.registerForm.get('password')?.errors;
-        if (errors) {
-          delete errors['confirmPassword'];
-          if (Object.keys(errors).length === 0) {
-            this.registerForm.get('password')?.setErrors(null);
-          }
-        }
-      }
-
       const student = {
         firstName,
         lastName,
@@ -152,20 +119,20 @@ export class HomeComponent implements OnInit {
         email,
         password
       };
-        console.log('student', student);
-      this.studentService.registerOrUpdateStudent(student).subscribe((data) => {
+      this.studentService.registerOrUpdateStudent(student).subscribe(() => {
         const credentials = {
           username: email,
           password: password
         };
        this.logUserIn(credentials)
       }, (error) => {
-
+        console.log(error)
       });
     } else {
       this.markAllFieldsAsTouched(this.registerForm);
     }
   }
+
 
   private markAllFieldsAsTouched(form: FormGroup): void {
     Object.keys(form.controls).forEach(field => {
@@ -174,4 +141,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  forgotPassword() {
+    this.router.navigate(['/resetPassword'])
+  }
 }

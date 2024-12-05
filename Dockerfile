@@ -1,27 +1,28 @@
-# Stage 1: Build Angular app
-FROM node:18 AS build
+FROM node:18-alpine AS builder
 
-# Set working directory inside the container
 WORKDIR /app
-
-# Install dependencies
 COPY package*.json ./
-RUN npm install
-
-# Copy the source files
+RUN npm ci --only=production
 COPY . .
+RUN npm run build --configuration=production
 
-# Build the Angular app
-RUN npm run build --prod
-
-# Stage 2: Serve Angular app using Nginx
 FROM nginx:alpine
 
-# Copy the build files from the previous stage to Nginx's public folder
-COPY --from=build /app/dist/student-portal-ui /usr/share/nginx/html
+RUN apk update && apk upgrade
 
-# Expose port 80 (default Nginx port)
+# Create nginx user and set up permissions
+RUN addgroup -g 101 -S nginx || true && \
+    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true && \
+    mkdir -p /var/cache/nginx/client_temp /var/run/nginx /tmp && \
+    chown -R nginx:nginx /var/cache/nginx /var/run/nginx /tmp && \
+    chmod -R 755 /var/cache/nginx /var/run/nginx /tmp
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/student-portal-ui /usr/share/nginx/html
+
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
+
+USER nginx
 EXPOSE 80
-
-# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]

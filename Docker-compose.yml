@@ -1,18 +1,33 @@
-version: '3.8'
-
 services:
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: angular-container
+    container_name: student-portal-ui-container
     ports:
-      - "4200:80"  # Expose Angular's internal port 80 to the host port 4200
+      - "4200:80"
     environment:
-      BACKEND_API_URL: http://student-portal-container:8080  # Backend service URL for API communication
+      - BACKEND_API_URL=http://student-portal-container:8080
+      - NODE_ENV=production
     networks:
-      - student_portal_network  # Connect to the shared network
+      - student-portal_student_portal_network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
-  student_portal_network:
-    external: true  # Reuse the shared network created in the backend setup
+  student-portal_student_portal_network:
+    external: true

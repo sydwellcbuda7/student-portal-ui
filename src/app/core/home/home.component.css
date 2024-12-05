@@ -72,6 +72,7 @@
   text-align: right;
   margin-top: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .register{
@@ -118,7 +119,7 @@
 }
 
 .hover-circle:hover {
-  background-color: lightgrey; /* Color for the circle */
+  background-color: lightgrey;
 }
 
 .content-container{

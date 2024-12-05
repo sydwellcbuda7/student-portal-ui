@@ -56,8 +56,6 @@ export class ChangePasswordComponent implements OnInit {
   changePassword(): void {
     if (this.changePasswordForm.valid) {
       const password = this.changePasswordForm.get('password')?.value as string;
-      const confirmPassword = this.changePasswordForm.get('confirmPassword')?.value as string;
-
       const changePasswordTo = {
         token: this.token,
         password

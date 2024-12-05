@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {AccessControlService} from "../service/access-control.service";
 import {MatMenuTrigger} from "@angular/material/menu";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {StudentService} from "../service/student.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -21,7 +20,6 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router,
               private accessControlService: AccessControlService,
               private studentService: StudentService,
-              private snackBar: MatSnackBar,
               private fb: FormBuilder) {
 
     this.profileForm = this.fb.group({
@@ -80,8 +78,8 @@ export class DashboardComponent implements OnInit {
         const gender = this.profileForm.get('gender')?.value as string;
         const studentNumber = this.profileForm.get('studentNumber')?.value as string;
         const email = this.profileForm.get('email')?.value as string;
-        const password = this.profileForm.get('password')?.value as string;
-        const confirmPassword = this.profileForm.get('confirmPassword')?.value as string;
+        // const password = this.profileForm.get('password')?.value as string;
+        // const confirmPassword = this.profileForm.get('confirmPassword')?.value as string;
         this.student.firstName = firstName
         this.student.lastName = lastName
         this.student.gender = gender
@@ -89,12 +87,11 @@ export class DashboardComponent implements OnInit {
         this.student.email = email
         this.student.firstName = firstName
 
-        console.log('student', this.student);
         this.studentService.registerOrUpdateStudent(this.student).subscribe((data) => {
           this.student = data
           this.profileForm.disable();
 
-        }, (error) => {
+        }, () => {
 
         });
 
@@ -112,7 +109,7 @@ export class DashboardComponent implements OnInit {
   }
 
   changePassword() {
-    this.accessControlService.resetPassword(this.student.email).subscribe((data) => {
+    this.accessControlService.resetPassword(this.student.email).subscribe(() => {
 
     })
   }
