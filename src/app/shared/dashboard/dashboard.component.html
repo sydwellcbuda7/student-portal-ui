@@ -55,19 +55,21 @@
 
           <div class="profile-detail">
             <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Gender</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="gender">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
               <mat-label>Student Number</mat-label>
               <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="studentNumber">
             </mat-form-field>
           </div>
           <mat-divider></mat-divider>
 
-          <div class="profile-detail">
-            <mat-form-field class="input-fields" appearance="outline">
-              <mat-label>Gender</mat-label>
-              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="gender">
-            </mat-form-field>
-          </div>
-          <mat-divider></mat-divider>
 
           <div class="profile-detail" style="position: relative;">
             <mat-form-field class="input-fields" appearance="outline">

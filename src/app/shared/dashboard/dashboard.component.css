@@ -12,10 +12,11 @@
 .profile-name {
   font-size: 16px; /* Matches other rows */
   font-weight: bold;
+  color: #f5f5f5;
 }
 
 .profile-icon {
-  background-color: white;
+  background-color: #f5f5f5;
   color: deepskyblue;
   border-radius: 50%;
   width: 40px; /* Reduced size for consistency */
