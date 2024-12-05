@@ -2,14 +2,13 @@
   <mat-toolbar class="header-toolbar mat-elevation-z0 fixed-top">
     <mat-toolbar-row>
       <div class="profile-header">
-        <span class="profile-name">John Doe</span>
+        <span class="profile-name">{{ student?.firstName}} {{ student?.lastName}}</span>
         <!-- Profile Icon -->
         <mat-icon style="display: flex; align-content: center; align-items: center; justify-content: center"
           class="profile-icon"
           [matMenuTriggerFor]="menu"
-          aria-label="User menu"
-        >JD
-        </mat-icon>
+          aria-label="student menu"
+        >{{ student?.firstName?.charAt(0).toUpperCase()}}{{ student?.lastName?.charAt(0).toUpperCase()}}        </mat-icon>
         <!-- Dropdown Menu -->
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
@@ -28,28 +27,71 @@
     <div class="profile-title">Profile</div>
     <mat-card class="profile-card mat-elevation-z0">
       <div class="profile-details">
-        <div class="profile-detail">Name: {{user.name}}</div>
-        <mat-divider></mat-divider>
-        <div class="profile-detail">Surname: {{user.surname}}</div>
-        <mat-divider></mat-divider>
-        <div class="profile-detail">Email: {{user.email}}</div>
-        <mat-divider></mat-divider>
-        <div class="profile-detail">Student Number: {{user.studentNumber}}</div>
-        <mat-divider></mat-divider>
-        <div class="profile-detail">Gender: {{user.gender}}</div>
-        <mat-divider></mat-divider>
-        <div class="profile-detail">
-          <div>Password: ********* </div>
-          <mat-icon
-            matTooltip="Change Password"
-            matTooltipPosition="above"
-            color="primary"
-            style="margin-right: 10px">edit
-          </mat-icon>
+        <form [formGroup]="profileForm">
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="firstName">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Surname</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="lastName">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="email">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Student Number</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="studentNumber">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="profile-detail">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Gender</mat-label>
+              <input matInput [readonly]="!isEditMode" [disabled]="!isEditMode" formControlName="gender">
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+
+          <div class="profile-detail" style="position: relative;">
+            <mat-form-field class="input-fields" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput value="*********" disabled>
+            </mat-form-field>
+            <mat-icon
+              matTooltip="Change Password"
+              color="primary"
+              style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 1;"
+              (click)="changePassword()">
+              edit
+            </mat-icon>
+          </div>
+
+          <mat-divider></mat-divider>
+        </form>
+
+        <div style="display: flex; justify-content: end; margin-right: 10px">
+          <button mat-flat-button color="primary" (click)="toggleEditMode()">
+            {{ isEditMode ? 'Save Profile' : 'Edit Profile' }}
+          </button>
         </div>
-        <mat-divider></mat-divider>
-        <div style="display: flex; justify-content: end; margin-right: 10px"> <button  mat-flat-button color="primary" > Edit Profile</button></div>
       </div>
     </mat-card>
+
   </div>
 </main>

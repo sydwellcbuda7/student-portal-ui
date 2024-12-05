@@ -16,8 +16,7 @@ export class AuthorizedUserGuard implements CanActivate {
 
     // Get logged-in user info
     const loggedInUserInfo = this.accessControlService.getSessionContext();
-    console.log("Logged in User ", loggedInUserInfo);
-    console.log("Routes ", route);
+
 
     if (loggedInUserInfo && route.data?.['authorizedRoles']) {
       const routeAuthorizedRoles: Role[] = route.data['authorizedRoles'];
