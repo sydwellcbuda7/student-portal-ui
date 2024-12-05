@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AccessControlService} from "../../shared/service/access-control.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {StudentService} from "../../shared/service/student.service";
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router,
               private accessControlService: AccessControlService,
+              private studentService: StudentService,
               private fb: FormBuilder) {
 
 
@@ -40,6 +42,7 @@ export class HomeComponent implements OnInit {
       studentNumber: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -67,46 +70,71 @@ export class HomeComponent implements OnInit {
 
 
   login(): void {
-    if (this.loginForm.valid) {
-      const username = this.loginForm.get('username')?.value as string;
-      const password = this.loginForm.get('password')?.value as string;
-      const credentials = {
-        username,
+      if (this.loginForm.valid) {
+        const username = this.loginForm.get('username')?.value as string;
+        const password = this.loginForm.get('password')?.value as string;
+        const credentials = {
+          username,
+          password
+        };
+        this.logUserIn(credentials);
+      } else {
+        this.markAllFieldsAsTouched(this.loginForm);
+      }
+
+
+  }
+
+  logUserIn(credentials: any): void{
+    this.accessControlService.loginUser(credentials).subscribe((data) => {
+      this.accessControlService.setSession(data);
+
+      this.accessControlService.getSessionContexts().subscribe((sessionContextList) => {
+        if (sessionContextList.length > 1) {
+          this.accessControlService.setSessionContext(
+            sessionContextList.find((s: { role: string }) => s.role === 'STUDENT')
+          );
+        } else {
+          this.accessControlService.setSessionContext(sessionContextList[0]);
+        }
+
+        this.router.navigate(['/student']);
+
+      });
+    }, (error) => {
+
+    });
+  }
+
+  register(): void {
+    if (this.registerForm.valid) {
+
+      const firstName = this.registerForm.get('firstName')?.value as string;
+      const lastName = this.registerForm.get('lastName')?.value as string;
+      const gender = this.registerForm.get('gender')?.value as string;
+      const studentNumber = this.registerForm.get('studentNumber')?.value as string;
+      const email = this.registerForm.get('email')?.value as string;
+      const password = this.registerForm.get('password')?.value as string;
+      const confirmPassword = this.registerForm.get('confirmPassword')?.value as string;
+      const student = {
+        firstName,
+        lastName,
+        gender,
+        studentNumber,
+        email,
         password
       };
-
-      this.accessControlService.loginUser(credentials).subscribe((data) => {
-        this.accessControlService.setSession(data);
-
-        this.accessControlService.getSessionContexts().subscribe((sessionContextList) => {
-          if (sessionContextList.length > 1) {
-            this.accessControlService.setSessionContext(
-              sessionContextList.find((s: { role: string }) => s.role === 'STUDENT')
-            );
-          } else {
-            this.accessControlService.setSessionContext(sessionContextList[0]);
-          }
-
-          this.router.navigate(['/student']);
-
-        });
+        console.log('student', student);
+      this.studentService.registerOrUpdateStudent(student).subscribe((data) => {
+        const credentials = {
+          username: email,
+          password: password
+        };
+       this.logUserIn(credentials)
       }, (error) => {
 
       });
     } else {
-      this.markAllFieldsAsTouched(this.loginForm);
-    }
-  }
-
-  register(): void {
-    console.log('Register ');
-
-    if (this.registerForm.valid) {
-      const userDetails = this.registerForm.value;
-      console.log('Register:', userDetails);
-
-    } else {
-      console.log('Register failed');
       this.markAllFieldsAsTouched(this.registerForm);
     }
   }

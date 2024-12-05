@@ -10,23 +10,25 @@
     <div class="log-in-header">
       <span  *ngIf="!isRegisterMode"class="welcome-text">Welcome to </span>
       <span  *ngIf="isRegisterMode" class="welcome-text">Register to </span>
-      <span class="enviro-text">Student Portal</span>
+      <span class="header-text">Student Portal</span>
     </div>
-    <div  *ngIf="!isRegisterMode; else registerForm">
+    <div  *ngIf="!isRegisterMode; else registerFormView">
       <form [formGroup]="loginForm">
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
-            <mat-label>Username</mat-label>
-            <input matInput  placeholder="username" formControlName="username">
+            <mat-label>Email</mat-label>
+            <input matInput  placeholder="email" formControlName="username">
           </mat-form-field>
           <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
-            Username is required
+            Email is required
           </mat-error>
         </div>
+
+
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" placeholder="passsword" formControlName="password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Passsword" formControlName="password">
             <button
               mat-icon-button
               matSuffix
@@ -39,57 +41,73 @@
 
           </mat-form-field>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
-            Password is required
+             Password is required
           </mat-error>
 
           <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
-            Password must have a minimum length of 6 characters
+            password must be at least 6 characters long
           </mat-error>
 
         </div>
       </form>
     </div>
 
-    <ng-template #registerForm>
-      <form>
+    <ng-template #registerFormView>
+      <form [formGroup]="registerForm">
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>First Name</mat-label>
-            <input matInput autocomplete="name">
+            <input matInput placeholder="First Name" formControlName="firstName">
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('firstName')?.hasError('required') && registerForm.get('firstName')?.touched">
+            First Name is required
+          </mat-error>
         </div>
-
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Last Name</mat-label>
-            <input matInput autocomplete="name">
+            <input matInput placeholder="Last Name" formControlName="lastName">
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('lastName')?.hasError('required') && registerForm.get('lastName')?.touched">
+            Last Name is required
+          </mat-error>
         </div>
 
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Gender</mat-label>
-            <input matInput autocomplete="name">
+            <input matInput placeholder="gender" formControlName="gender">
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched">
+            Gender is required
+          </mat-error>
         </div>
 
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Student Number</mat-label>
-            <input matInput autocomplete="name">
+            <input matInput  placeholder="Student Number" formControlName="studentNumber">
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('studentNumber')?.hasError('required') && registerForm.get('studentNumber')?.touched">
+            StudentNumber is required
+          </mat-error>
         </div>
 
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput autocomplete="email">
+            <input matInput placeholder="Email" formControlName="email">
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+            Email is required
+          </mat-error>
         </div>
+
+
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" autocomplete="password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Passsword" formControlName="password">
             <button
               mat-icon-button
               matSuffix
@@ -99,13 +117,22 @@
             >
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
+
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+            Password is required
+          </mat-error>
+
+          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+            password must be at least 6 characters long
+          </mat-error>
+
         </div>
 
         <div class="label-color">
           <mat-form-field class="input-fields" appearance="outline">
             <mat-label>Confirm Password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" autocomplete="confirm password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirm Password" formControlName="confirmPassword">
             <button
               mat-icon-button
               matSuffix
@@ -115,7 +142,16 @@
             >
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
+
           </mat-form-field>
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched">
+            Confirm Password is required
+          </mat-error>
+
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')">
+            Confirm password must be at least 6 characters long
+          </mat-error>
+
         </div>
 
       </form>
@@ -124,7 +160,7 @@
       >Register</button>
     </ng-template>
     <div class="forgot-password" *ngIf="!isRegisterMode">
-      <a href="">Forgot Password?</a>
+      <a [routerLink]="'/reset-password'">Forgot Password?</a>
     </div>
     <button
       class="login-button"

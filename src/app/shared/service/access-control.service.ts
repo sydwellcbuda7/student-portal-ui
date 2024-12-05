@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Role} from "../enums/role.enum";
 import {Observable} from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 
@@ -11,22 +10,18 @@ const jwtHelperService = new JwtHelperService();
 @Injectable()
 export class AccessControlService {
 
-  constructor(private http: HttpClient,
-              private dialog: MatDialog) {
+  constructor(private http: HttpClient) {
   }
 
-signUpStudent(student: any): Observable<any> {
-  return this.http.post<any>('api/v1/access-control/sign-up', JSON.stringify(student),
-    {headers: new HttpHeaders().set('Content-Type', 'application/json')});
-}
+
 
   loginUser(credentials: any): Observable<any> {
     return this.http.post<any>('/api/v1/access-control/sign-in', JSON.stringify(credentials),
       {headers: new HttpHeaders().set('Content-Type', 'application/json')});
   }
 
-  resetPassword(username: string): Observable<null> {
-    return this.http.post<null>(`/api/access-control/reset-password?username=${username}`, null,
+  resetPassword(email: string): Observable<null> {
+    return this.http.post<null>(`/api/v1/access-control/reset-password?email=${email}`, null,
       {headers: new HttpHeaders().set('Content-Type', 'application/json')});
   }
 
@@ -66,30 +61,6 @@ signUpStudent(student: any): Observable<any> {
     return session ? JSON.parse(session) : null;
   }
 
-  private hasRole(role: Role): boolean {
-    const token = localStorage.getItem('id_token');
-    if (token !== null) {
-      const decodedToken = jwtHelperService.decodeToken(token);
-      return decodedToken.roles.includes(role);
-    }
-    return false;
-  }
 
-  resetLinkExpired(token: any): Observable<any> {
-    return this.http.get<any>(`/api/v1/access-control/password-reset-link-expired?token=${token}`);
-  }
 
-  verifyEmail(token: string): Observable<null> {
-    return this.http.post<null>(`/api/v1/access-control/verify-email?token=${token}`, null,
-      {headers: new HttpHeaders().set('Content-Type', 'application/json')});
-  }
-
-  resendEmailVerification(email: string): Observable<null> {
-    return this.http.post<null>(`/api/v1/access-control/resend-email-verification?email=${email}`, null,
-      {headers: new HttpHeaders().set('Content-Type', 'application/json')});
-  }
-
-  emailTokenExpiry(token: string): Observable<any> {
-    return this.http.get<any>(`/api/v1/access-control/email-verification-token-expiry?token=${token}`);
-  }
 }

@@ -38,7 +38,15 @@
         <mat-divider></mat-divider>
         <div class="profile-detail">Gender: {{user.gender}}</div>
         <mat-divider></mat-divider>
-        <div  class="profile-detail"><div style="">Password: *********  </div><mat-icon color="primary" style="margin-right: 10px">edit</mat-icon></div>
+        <div class="profile-detail">
+          <div>Password: ********* </div>
+          <mat-icon
+            matTooltip="Change Password"
+            matTooltipPosition="above"
+            color="primary"
+            style="margin-right: 10px">edit
+          </mat-icon>
+        </div>
         <mat-divider></mat-divider>
         <div style="display: flex; justify-content: end; margin-right: 10px"> <button  mat-flat-button color="primary" > Edit Profile</button></div>
       </div>

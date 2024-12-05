@@ -9,12 +9,16 @@ import {AuthorizedUserGuard} from "../security/activate-if-user-authorized.guard
 import {addAuthorizationGuards} from "../security/add-authorization-guards";
 import {HomeComponent} from "./home/home.component";
 import {MatInputModule} from "@angular/material/input";
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
