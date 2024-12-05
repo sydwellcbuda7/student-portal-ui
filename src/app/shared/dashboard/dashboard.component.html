@@ -24,8 +24,9 @@
 
 <main style="margin-top: 30px;">
   <div class="profile-container">
-    <div class="profile-title">Profile</div>
     <mat-card class="profile-card mat-elevation-z0">
+      <div class="profile-title">Profile</div>
+
       <div class="profile-details">
         <form [formGroup]="profileForm">
           <div class="profile-detail">
@@ -74,6 +75,7 @@
               <input matInput value="*********" disabled>
             </mat-form-field>
             <mat-icon
+              matTooltipPosition="left"
               matTooltip="Change Password"
               color="primary"
               style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 1;"

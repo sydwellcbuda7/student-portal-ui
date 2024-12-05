@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit {
 
     if (this.isEditMode) {
       this.profileForm.enable();
+      this.profileForm.get('studentNumber')?.disable();
     } else {
 
       if (this.profileForm.valid) {
