@@ -9,22 +9,19 @@ export const routes: AuthorizedRoutes = [
 
   {
     path: '',
-    component: HomeComponent, // Default route
-    pathMatch: 'full', // Ensures this matches exactly the empty path
+    component: HomeComponent,
     data: { permitAll: true }
   },
 
   {
     path: 'reset-password',
-    component: ResetPasswordComponent, // Default route
-    pathMatch: 'full', // Ensures this matches exactly the empty path
+    component: ResetPasswordComponent,
     data: { permitAll: true }
   },
 
   {
     path: 'change-password',
-    component: ChangePasswordComponent, // Default route
-    pathMatch: 'full', // Ensures this matches exactly the empty path
+    component: ChangePasswordComponent,
     data: { permitAll: true }
   },
 

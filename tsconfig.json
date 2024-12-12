@@ -2,14 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "baseUrl": "./",
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@core/*": ["src/app/core/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@env/*": ["src/environments/*"]
-    },
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -18,47 +10,21 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": false,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "removeComments": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "allowJs": false
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "enableIvy": true,
-    "fullTemplateTypeCheck": true,
-    "strictTemplateTypeCheck": true,
-    "preserveWhitespaces": false,
-    "trace": false,
-    "disableTypeScriptVersionCheck": true,
-    "enableResourceInlining": true
+    "strictTemplates": true
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "coverage"
-  ],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

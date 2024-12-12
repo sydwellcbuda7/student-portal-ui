@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  front_end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sydwellcbu/student_portal_ui:0.0.1-SNAPSHOT
+    container_name: student-portal-ui-container
+    ports:
+      - "4200:4200"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  app-network:
+    driver: bridge

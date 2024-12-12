@@ -1,28 +1,32 @@
-FROM node:18-alpine AS builder
+# Step 1: Use official Node.js image to build the Angular app
+FROM node:18 AS build
 
+# Set the working directory inside the container
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build --configuration=production
 
+# Copy package.json and package-lock.json (if available) to install dependencies
+COPY package*.json ./
+
+# Install the Angular dependencies
+RUN npm install
+
+# Copy the rest of the application files to the container
+COPY . .
+
+# Build the Angular app for production
+RUN npm run build --prod
+
+# Step 2: Use official Nginx image to serve the built Angular app
 FROM nginx:alpine
 
-RUN apk update && apk upgrade
+# Update the default Nginx configuration to listen on port 4200
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Create nginx user and set up permissions
-RUN addgroup -g 101 -S nginx || true && \
-    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true && \
-    mkdir -p /var/cache/nginx/client_temp /var/run/nginx /tmp && \
-    chown -R nginx:nginx /var/cache/nginx /var/run/nginx /tmp && \
-    chmod -R 755 /var/cache/nginx /var/run/nginx /tmp
+# Copy the built Angular app from the previous stage to Nginx's default folder
+COPY --from=build /app/dist/student-portal /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/student-portal-ui /usr/share/nginx/html
+# Expose port 4200
+EXPOSE 4200
 
-RUN chown -R nginx:nginx /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
-
-USER nginx
-EXPOSE 80
+# Command to run Nginx (this is the default in the Nginx image)
 CMD ["nginx", "-g", "daemon off;"]

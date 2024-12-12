@@ -8,9 +8,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
 import {StudentPortalToastComponent} from "./shared/student-portal-toast/student-portal-toast.component";
-import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
-import {StudentModule} from "./student/student.module";
 import {AuthInterceptor} from "./interceptor/auth.interceptor";
 
 
@@ -24,8 +22,6 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
     RouterModule,
     MaterialModule,
     CoreModule,
-    SharedModule,
-    StudentModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -33,7 +29,6 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
       timeOut: 2000,
       toastComponent: StudentPortalToastComponent,
     }),
-    SharedModule
   ],
 
   providers:[

@@ -4,7 +4,6 @@ import {MaterialModule} from "../material/material.module";
 import {StudentPortalToastComponent} from "./student-portal-toast/student-portal-toast.component";
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
 import {ContentWrapperComponent} from "./content-wrapper/content-wrapper.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AccessControlService} from "./service/access-control.service";
@@ -24,7 +23,6 @@ import {StudentService} from "./service/student.service";
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
   exports: [
     StudentPortalToastComponent,
