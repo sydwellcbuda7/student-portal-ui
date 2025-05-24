@@ -1,14 +1,15 @@
 version: '3.8'
 
 services:
-  front_end:
+  student-portal-ui:
     build:
       context: .
       dockerfile: Dockerfile
     image: sydwellcbu/student_portal_ui:0.0.1-SNAPSHOT
-    container_name: student-portal-ui-container
+    container_name: student-portal-ui
     ports:
       - "4200:4200"
+      - "9113:9113"
     networks:
       - app-network
     healthcheck:
