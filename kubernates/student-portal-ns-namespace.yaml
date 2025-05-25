@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: student-portal-ns
-  namespace: student-portal-ns
